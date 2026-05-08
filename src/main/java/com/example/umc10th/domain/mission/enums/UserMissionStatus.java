@@ -5,10 +5,11 @@ import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor
-public enum MissionStatus {
-    BEFORE("진행 전"),
-    ONGOING("진행 중"),
+
+public enum UserMissionStatus {
+    CHALLENGING("도전 중"),
     COMPLETED("완료");
 
     private final String description;
+
 }

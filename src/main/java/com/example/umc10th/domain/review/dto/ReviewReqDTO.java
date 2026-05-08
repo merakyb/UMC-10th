@@ -7,6 +7,6 @@ public class ReviewReqDTO {
     @Getter
     public static class CreateReviewDTO {
         private String content;
-        private Integer score;
+        private Float rating;
     }
 }
