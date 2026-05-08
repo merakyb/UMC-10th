@@ -7,7 +7,9 @@ public class UserReqDTO {
                 String nickname,
                 String gender,
                 String birth,
-                Long regionId
+                Long regionId,
+                String password,
+                String email
         ) {}
 
         public record ChangeRegionDTO(
