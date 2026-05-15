@@ -1,9 +1,5 @@
 package com.example.umc10th.domain.user.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-
 public class UserResDTO {
 
     public record SignUpResultDTO(
@@ -16,12 +12,9 @@ public class UserResDTO {
             Long regionId
     ) {}
 
-    @Builder
-    @Getter
-    @AllArgsConstructor
-    public static class MyPageDTO {
-        String name;
-        String email;
-        Long totalPoint;
-    }
+    public record MyPageDTO(
+        String name,
+        String email,
+        Long totalPoint
+    ) {}
 }

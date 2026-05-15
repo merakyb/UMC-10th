@@ -34,17 +34,18 @@ public class ReviewService {
                 .orElseThrow(() -> new RuntimeException("가게를 찾을 수 없습니다."));
 
         Review review = Review.builder()
-                .rating(request.getRating())
-                .content(request.getContent())
+                .rating(request.rating())
+                .content(request.content())
                 .user(user)
                 .store(store)
                 .build();
 
         Review savedReview = reviewRepository.save(review);
 
-        return ReviewResDTO.CreateReviewResultDTO.builder()
-                .reviewId(savedReview.getReviewId())
-                .build();
+        return new ReviewResDTO.CreateReviewResultDTO(
+                savedReview.getReviewId()
+        );
+
     }
 
 }

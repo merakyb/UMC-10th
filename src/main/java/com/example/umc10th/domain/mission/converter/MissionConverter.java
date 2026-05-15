@@ -9,13 +9,13 @@ import java.util.List;
 
 public class MissionConverter {
     public static MissionResDTO.MyMissionDTO toMyMissionDTO(UserMission userMission) {
-        return MissionResDTO.MyMissionDTO.builder()
-                .missionId(userMission.getMission().getMissionId())
-                .pointReward(userMission.getMission().getPointReward())
-                .storeName(userMission.getMission().getStore().getName())
-                .description(userMission.getMission().getDescription())
-                .status(userMission.getStatus())
-                .build();
+        return new MissionResDTO.MyMissionDTO(
+                userMission.getMission().getMissionId(),
+                userMission.getMission().getPointReward(),
+                userMission.getMission().getStore().getName(),
+                userMission.getMission().getDescription(),
+                userMission.getStatus()
+        );
     }
 
     public static MissionResDTO.MyMissionListDTO toMyMissionListDTO(Page<UserMission> userMissionPage) {
@@ -23,25 +23,25 @@ public class MissionConverter {
                 .map(MissionConverter::toMyMissionDTO)
                 .toList();
 
-        return MissionResDTO.MyMissionListDTO.builder()
-                .missionList(missionDTOList)
-                .listSize(missionDTOList.size())
-                .totalPage(userMissionPage.getTotalPages())
-                .totalElements(userMissionPage.getTotalElements())
-                .isFirst(userMissionPage.isFirst())
-                .isLast(userMissionPage.isLast())
-                .build();
+        return new MissionResDTO.MyMissionListDTO(
+                missionDTOList,
+                missionDTOList.size(),
+                userMissionPage.getTotalPages(),
+                userMissionPage.getTotalElements(),
+                userMissionPage.isFirst(),
+                userMissionPage.isLast()
+                );
     }
 
     public static MissionResDTO.HomeMissionDTO toHomeMissionDTO(Mission mission) {
-        return MissionResDTO.HomeMissionDTO.builder()
-                .missionId(mission.getMissionId())
-                .storeName(mission.getStore().getName())
-                .description(mission.getDescription())
-                .endAt(mission.getEndAt())
-                .pointReward(mission.getPointReward())
-                .status(mission.getStatus())
-                .build();
+        return new MissionResDTO.HomeMissionDTO(
+                mission.getMissionId(),
+                mission.getStore().getName(),
+                mission.getDescription(),
+                mission.getEndAt(),
+                mission.getPointReward(),
+                mission.getStatus()
+                );
     }
 
     public static MissionResDTO.HomeMissionListDTO toHomeMissionListDTO(
@@ -52,14 +52,14 @@ public class MissionConverter {
                 .map(MissionConverter::toHomeMissionDTO)
                 .toList();
 
-        return MissionResDTO.HomeMissionListDTO.builder()
-                .regionName(regionName)
-                .missionList(missionDTOList)
-                .listSize(missionDTOList.size())
-                .totalPage(missionPage.getTotalPages())
-                .totalElements(missionPage.getTotalElements())
-                .isFirst(missionPage.isFirst())
-                .isLast(missionPage.isLast())
-                .build();
+        return new MissionResDTO.HomeMissionListDTO(
+                regionName,
+                missionDTOList,
+                missionDTOList.size(),
+                missionPage.getTotalPages(),
+                missionPage.getTotalElements(),
+                missionPage.isFirst(),
+                missionPage.isLast()
+                );
     }
 }

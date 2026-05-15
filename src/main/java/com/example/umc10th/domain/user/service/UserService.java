@@ -38,10 +38,10 @@ public class UserService {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("사용자를 찾을 수 없습니다"));
 
-        return UserResDTO.MyPageDTO.builder()
-                .name(user.getName())
-                .email(user.getEmail())
-                .totalPoint(user.getTotalPoint())
-                .build();
+        return new UserResDTO.MyPageDTO(
+                user.getName(),
+                user.getEmail(),
+                user.getTotalPoint()
+                );
     }
 }
