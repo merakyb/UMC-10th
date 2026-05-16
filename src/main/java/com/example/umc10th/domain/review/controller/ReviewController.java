@@ -4,7 +4,7 @@ import com.example.umc10th.domain.review.dto.ReviewReqDTO;
 import com.example.umc10th.domain.review.dto.ReviewResDTO;
 import com.example.umc10th.domain.review.service.ReviewService;
 import com.example.umc10th.global.apiPayload.ApiResponse;
-import com.example.umc10th.global.apiPayload.code.GeneralSuccessCode;
+import com.example.umc10th.global.apiPayload.code.GeneralSuccessSuccessCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,7 +21,7 @@ public class ReviewController {
             @RequestBody ReviewReqDTO.CreateReviewDTO request
     ) {
         return ApiResponse.onSuccess(
-                GeneralSuccessCode.OK,
+                GeneralSuccessSuccessCode.OK,
                 reviewService.createReview(userId, storeId, request));
     }
 }

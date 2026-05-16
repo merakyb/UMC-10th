@@ -16,12 +16,12 @@ public class MissionResDTO {
             String status,
             Integer page,
             Integer size
-    ) {}
+    ){}
 
     public record MissionDetailDTO(
             Long missionId,
             String message
-    ) {}
+    ){}
 
     public record MyMissionDTO(
         Long missionId,
@@ -29,27 +29,27 @@ public class MissionResDTO {
         String storeName,
         String description,
         UserMissionStatus status
-    ) {}
+    ){}
 
-    public record MyMissionListDTO (
+    public record MyMissionListDTO(
         List<MyMissionDTO> missionList,
         Integer listSize,
         Integer totalPage,
         Long totalElements,
         Boolean isFirst,
         Boolean isLast
-    ) {}
+    ){}
 
-    public record HomeMissionDTO (
+    public record HomeMissionDTO(
         Long missionId,
         String storeName,
         String description,
         LocalDateTime endAt,
         Long pointReward,
         MissionStatus status
-        ) {}
+        ){}
 
-    public record HomeMissionListDTO (
+    public record HomeMissionListDTO(
         String regionName,
         List<HomeMissionDTO> missionList,
         Integer listSize,
@@ -59,4 +59,9 @@ public class MissionResDTO {
         Boolean isLast
     ){}
 
+    public record GetMission(
+            Long missionId,
+            Long point,
+            String conditional
+    ){}
 }

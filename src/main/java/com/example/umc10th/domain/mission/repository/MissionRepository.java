@@ -8,6 +8,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.List;
+
 public interface MissionRepository extends JpaRepository<Mission, Long> {
     @Query("""
         SELECT m
@@ -22,4 +24,7 @@ public interface MissionRepository extends JpaRepository<Mission, Long> {
             @Param("status") MissionStatus status,
             Pageable pageable
     );
+
+    List<Mission> findAllByStore_StoreId(Long storeId);
+
 }

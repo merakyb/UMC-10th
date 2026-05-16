@@ -1,6 +1,6 @@
 package com.example.umc10th.global.apiPayload;
 
-import com.example.umc10th.global.apiPayload.code.BaseCode;
+import com.example.umc10th.global.apiPayload.code.BaseSuccessCode;
 import com.example.umc10th.global.apiPayload.code.BaseErrorCode;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -18,7 +18,7 @@ public class ApiResponse<T> {
     private final String message;
     private final T result;
 
-    public static <T> ApiResponse<T> onSuccess(BaseCode code, T result) {
+    public static <T> ApiResponse<T> onSuccess(BaseSuccessCode code, T result) {
         return new ApiResponse<>(true, code.getCode(), code.getMessage(), result);
     }
 

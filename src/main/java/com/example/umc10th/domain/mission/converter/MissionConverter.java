@@ -1,8 +1,10 @@
 package com.example.umc10th.domain.mission.converter;
 
+import com.example.umc10th.domain.mission.dto.MissionReqDTO;
 import com.example.umc10th.domain.mission.dto.MissionResDTO;
 import com.example.umc10th.domain.mission.entity.Mission;
 import com.example.umc10th.domain.mission.entity.UserMission;
+import com.example.umc10th.domain.store.entity.Store;
 import org.springframework.data.domain.Page;
 
 import java.util.List;
@@ -62,4 +64,29 @@ public class MissionConverter {
                 missionPage.isLast()
                 );
     }
-}
+
+    public static Mission toMission(
+            Store store,
+            MissionReqDTO.CreateMission dto
+    ) {
+        return Mission.builder()
+                .store(store)
+                .description(dto.conditional())
+                .pointReward(dto.point())
+                .endAt(dto.deadline())
+                .build();
+    }
+
+    public static MissionResDTO.GetMission toGetMission(
+            Mission mission
+    ) {
+        return new MissionResDTO.GetMission(
+                mission.getMissionId(),
+                mission.getPointReward(),
+                mission.getDescription()
+        );
+
+    }
+
+    }
+

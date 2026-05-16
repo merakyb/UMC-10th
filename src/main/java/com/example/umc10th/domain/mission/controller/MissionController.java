@@ -1,13 +1,18 @@
 package com.example.umc10th.domain.mission.controller;
 
+import com.example.umc10th.domain.mission.dto.MissionReqDTO;
 import com.example.umc10th.domain.mission.dto.MissionResDTO;
 import com.example.umc10th.domain.mission.enums.MissionStatus;
 import com.example.umc10th.domain.mission.enums.UserMissionStatus;
+import com.example.umc10th.domain.mission.exception.MissionSuccessCode;
 import com.example.umc10th.domain.mission.service.MissionService;
 import com.example.umc10th.global.apiPayload.ApiResponse;
-import com.example.umc10th.global.apiPayload.code.GeneralSuccessCode;
+import com.example.umc10th.global.apiPayload.code.BaseSuccessCode;
+import com.example.umc10th.global.apiPayload.code.GeneralSuccessSuccessCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/missions")
@@ -27,7 +32,7 @@ public class MissionController {
         MissionResDTO.MissionListDTO result =
                 new MissionResDTO.MissionListDTO(regionId, status, page, size);
 
-        return ApiResponse.onSuccess(GeneralSuccessCode.OK, result);
+        return ApiResponse.onSuccess(GeneralSuccessSuccessCode.OK, result);
     }
 
     @GetMapping("/{missionId}")
@@ -38,7 +43,7 @@ public class MissionController {
         MissionResDTO.MissionDetailDTO result =
                 new MissionResDTO.MissionDetailDTO(missionId, "미션 상세 조회 테스트");
 
-        return ApiResponse.onSuccess(GeneralSuccessCode.OK, result);
+        return ApiResponse.onSuccess(GeneralSuccessSuccessCode.OK, result);
     }
 
     @PostMapping("/{missionId}/challenge")
@@ -46,7 +51,7 @@ public class MissionController {
             @RequestHeader("Authorization") String authorization,
             @PathVariable Long missionId
     ) {
-        return ApiResponse.onSuccess(GeneralSuccessCode.OK, "미션 시작 성공");
+        return ApiResponse.onSuccess(GeneralSuccessSuccessCode.OK, "미션 시작 성공");
     }
 
     @PostMapping("/{missionId}/complete")
@@ -54,7 +59,7 @@ public class MissionController {
             @RequestHeader("Authorization") String authorization,
             @PathVariable Long missionId
     ) {
-        return ApiResponse.onSuccess(GeneralSuccessCode.OK, "미션 성공 처리 완료");
+        return ApiResponse.onSuccess(GeneralSuccessSuccessCode.OK, "미션 성공 처리 완료");
     }
 
     @GetMapping("/users/{userId}/missions")
@@ -63,7 +68,7 @@ public class MissionController {
             @RequestParam UserMissionStatus status,
             @RequestParam(defaultValue = "0") Integer page)
     {
-        return ApiResponse.onSuccess(GeneralSuccessCode.OK,missionService.getMyMissions(userId, status, page));
+        return ApiResponse.onSuccess(GeneralSuccessSuccessCode.OK,missionService.getMyMissions(userId, status, page));
     }
 
     @GetMapping("/home")
@@ -74,8 +79,25 @@ public class MissionController {
             @RequestParam(defaultValue = "10") Integer size
     ) {
         return ApiResponse.onSuccess(
-                GeneralSuccessCode.OK,
+                GeneralSuccessSuccessCode.OK,
                 missionService.getHomeMissions(regionId, status, page, size)
         );
+    }
+
+    @PostMapping("/v1/stores/{storeId}/missions")
+    public ApiResponse<Void> createMission(
+            @PathVariable Long storeId,
+            @RequestBody MissionReqDTO.CreateMission dto
+    ){
+        BaseSuccessCode code = MissionSuccessCode.CREATED;
+        return ApiResponse.onSuccess(code, missionService.createMission(storeId, dto));
+    }
+
+    @GetMapping("/v1/stores/{storeId}/missions")
+    public ApiResponse<List<MissionResDTO.GetMission>> getMissions(
+            @PathVariable Long storeId
+    ){
+        BaseSuccessCode code = MissionSuccessCode.OK;
+        return ApiResponse.onSuccess(code, missionService.getMissions(storeId));
     }
 }
