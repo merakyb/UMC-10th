@@ -2,7 +2,7 @@ package com.example.umc10th.domain.home.controller;
 
 import com.example.umc10th.domain.home.dto.HomeResDTO;
 import com.example.umc10th.global.apiPayload.ApiResponse;
-import com.example.umc10th.global.apiPayload.code.GeneralSuccessCode;
+import com.example.umc10th.global.apiPayload.code.GeneralSuccessSuccessCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,6 +21,6 @@ public class HomeController {
                 regionId
         );
 
-        return ApiResponse.onSuccess(GeneralSuccessCode.OK, result);
+        return ApiResponse.onSuccess(GeneralSuccessSuccessCode.OK, result);
     }
 }

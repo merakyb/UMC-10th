@@ -16,57 +16,52 @@ public class MissionResDTO {
             String status,
             Integer page,
             Integer size
-    ) {}
+    ){}
 
     public record MissionDetailDTO(
             Long missionId,
             String message
-    ) {}
+    ){}
 
-    @Getter
-    @Builder
-    @AllArgsConstructor
-    public static class MyMissionDTO {
-        private Long missionId;
-        private Long pointReward;
-        private String storeName;
-        private String description;
-        private UserMissionStatus status;
-    }
-    @Getter
-    @Builder
-    @AllArgsConstructor
-    public static class MyMissionListDTO {
-        private List<MyMissionDTO> missionList;
-        private Integer listSize;
-        private Integer totalPage;
-        private Long totalElements;
-        private Boolean isFirst;
-        private Boolean isLast;
-    }
+    public record MyMissionDTO(
+        Long missionId,
+        Long pointReward,
+        String storeName,
+        String description,
+        UserMissionStatus status
+    ){}
 
-    @Getter
-    @Builder
-    @AllArgsConstructor
-    public static class HomeMissionDTO {
-        private Long missionId;
-        private String storeName;
-        private String description;
-        private LocalDateTime endAt;
-        private Long pointReward;
-        private MissionStatus status;
-    }
+    public record MyMissionListDTO(
+        List<MyMissionDTO> missionList,
+        Integer listSize,
+        Integer totalPage,
+        Long totalElements,
+        Boolean isFirst,
+        Boolean isLast
+    ){}
 
-    @Getter
-    @Builder
-    @AllArgsConstructor
-    public static class HomeMissionListDTO {
-        private String regionName;
-        private List<HomeMissionDTO> missionList;
-        private Integer listSize;
-        private Integer totalPage;
-        private Long totalElements;
-        private Boolean isFirst;
-        private Boolean isLast;
-    }
+    public record HomeMissionDTO(
+        Long missionId,
+        String storeName,
+        String description,
+        LocalDateTime endAt,
+        Long pointReward,
+        MissionStatus status
+        ){}
+
+    public record HomeMissionListDTO(
+        String regionName,
+        List<HomeMissionDTO> missionList,
+        Integer listSize,
+        Integer totalPage,
+        Long totalElements,
+        Boolean isFirst,
+        Boolean isLast
+    ){}
+
+    public record GetMission(
+            Long missionId,
+            Long point,
+            String conditional
+    ){}
 }

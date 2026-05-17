@@ -5,7 +5,7 @@ import com.example.umc10th.domain.user.dto.UserResDTO;
 import com.example.umc10th.domain.user.entity.User;
 import com.example.umc10th.domain.user.service.UserService;
 import com.example.umc10th.global.apiPayload.ApiResponse;
-import com.example.umc10th.global.apiPayload.code.GeneralSuccessCode;
+import com.example.umc10th.global.apiPayload.code.GeneralSuccessSuccessCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,7 +25,7 @@ public class UserController {
                         user.getUserId(),
                         user.getName()
                 );
-        return ApiResponse.onSuccess(GeneralSuccessCode.OK, result);
+        return ApiResponse.onSuccess(GeneralSuccessSuccessCode.OK, result);
     }
 
     @GetMapping("/mypage/{userId}")
@@ -34,7 +34,7 @@ public class UserController {
     ) {
         UserResDTO.MyPageDTO result = userService.getMyPage(userId);
 
-        return ApiResponse.onSuccess(GeneralSuccessCode.OK, result);
+        return ApiResponse.onSuccess(GeneralSuccessSuccessCode.OK, result);
     }
 
 }
