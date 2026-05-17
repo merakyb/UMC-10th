@@ -9,6 +9,7 @@ import com.example.umc10th.domain.mission.service.MissionService;
 import com.example.umc10th.global.apiPayload.ApiResponse;
 import com.example.umc10th.global.apiPayload.code.BaseSuccessCode;
 import com.example.umc10th.global.apiPayload.code.GeneralSuccessSuccessCode;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -48,10 +49,15 @@ public class MissionController {
 
     @PostMapping("/{missionId}/challenge")
     public ApiResponse<String> challengeMission(
-            @RequestHeader("Authorization") String authorization,
-            @PathVariable Long missionId
+            @PathVariable Long missionId,
+            @RequestParam Long userId
     ) {
-        return ApiResponse.onSuccess(GeneralSuccessSuccessCode.OK, "미션 시작 성공");
+        missionService.challengeMission(userId, missionId);
+
+        return ApiResponse.onSuccess(
+                GeneralSuccessSuccessCode.OK,
+                "미션 시작 성공"
+        );
     }
 
     @PostMapping("/{missionId}/complete")
@@ -87,7 +93,7 @@ public class MissionController {
     @PostMapping("/v1/stores/{storeId}/missions")
     public ApiResponse<Void> createMission(
             @PathVariable Long storeId,
-            @RequestBody MissionReqDTO.CreateMission dto
+            @RequestBody @Valid MissionReqDTO.CreateMission dto
     ){
         BaseSuccessCode code = MissionSuccessCode.CREATED;
         return ApiResponse.onSuccess(code, missionService.createMission(storeId, dto));
@@ -100,4 +106,18 @@ public class MissionController {
         BaseSuccessCode code = MissionSuccessCode.OK;
         return ApiResponse.onSuccess(code, missionService.getMissions(storeId));
     }
+
+    @PostMapping("/in-progress")
+    public ApiResponse<MissionResDTO.MyMissionListDTO> getInProgressMissions(
+            @RequestBody MissionReqDTO.InProgressMissionDTO request,
+            @RequestParam(defaultValue = "0") Integer page
+    ) {
+        return ApiResponse.onSuccess(
+                GeneralSuccessSuccessCode.OK,
+                missionService.getInProgressMissions(request.userId(), page)
+        );
+    }
+
+
+
 }

@@ -15,12 +15,15 @@ import com.example.umc10th.domain.store.entity.Store;
 import com.example.umc10th.domain.store.exception.StoreErrorCode;
 import com.example.umc10th.domain.store.exception.StoreException;
 import com.example.umc10th.domain.store.repository.StoreRepository;
+import com.example.umc10th.domain.user.entity.User;
+import com.example.umc10th.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -30,6 +33,7 @@ public class MissionService {
     private final MissionRepository missionRepository;
     private final RegionRepository regionRepository;
     private final StoreRepository storeRepository;
+    private final UserRepository userRepository;
 
     public MissionResDTO.MyMissionListDTO getMyMissions(Long userId, UserMissionStatus status, Integer page) {
         Page<UserMission> userMissionPage = userMissionRepository.findMyMissions(
@@ -82,5 +86,33 @@ public class MissionService {
         return missionList.stream()
                 .map(MissionConverter::toGetMission)
                 .toList();
+    }
+
+    public MissionResDTO.MyMissionListDTO getInProgressMissions(Long userId, Integer page) {
+        Page<UserMission> userMissionPage = userMissionRepository.findMyMissions(
+                userId,
+                UserMissionStatus.CHALLENGING,
+                PageRequest.of(page, 10)
+        );
+
+        return MissionConverter.toMyMissionListDTO(userMissionPage);
+    }
+
+    @Transactional
+    public void challengeMission(Long userId, Long missionId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("사용자를 찾을 수 없습니다."));
+
+        Mission mission = missionRepository.findById(missionId)
+                .orElseThrow(() -> new RuntimeException("미션을 찾을 수 없습니다."));
+
+        UserMission userMission = UserMission.builder()
+                .user(user)
+                .mission(mission)
+                .status(UserMissionStatus.CHALLENGING)
+                .startedAt(LocalDateTime.now())
+                .build();
+
+        userMissionRepository.save(userMission);
     }
 }

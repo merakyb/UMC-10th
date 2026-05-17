@@ -4,6 +4,7 @@ import com.example.umc10th.domain.mission.dto.MissionReqDTO;
 import com.example.umc10th.domain.mission.dto.MissionResDTO;
 import com.example.umc10th.domain.mission.entity.Mission;
 import com.example.umc10th.domain.mission.entity.UserMission;
+import com.example.umc10th.domain.mission.enums.MissionStatus;
 import com.example.umc10th.domain.store.entity.Store;
 import org.springframework.data.domain.Page;
 
@@ -74,6 +75,7 @@ public class MissionConverter {
                 .description(dto.conditional())
                 .pointReward(dto.point())
                 .endAt(dto.deadline())
+                .status(MissionStatus.ONGOING)
                 .build();
     }
 
