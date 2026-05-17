@@ -6,6 +6,7 @@ import com.example.umc10th.domain.user.entity.User;
 import com.example.umc10th.domain.user.enums.Gender;
 import com.example.umc10th.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,13 +18,16 @@ import java.time.LocalDate;
 
 public class UserService {
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Transactional
     public User signUp(UserReqDTO.SignUpDTO request) {
+        String encodedPassword =
+                passwordEncoder.encode(request.password());
 
         User user = User.builder()
                 .email(request.email())
-                .password(request.password())
+                .password(encodedPassword)
                 .name(request.nickname())
                 .gender(Gender.MALE)
                 .birthday(LocalDate.of(2003,9,22))
