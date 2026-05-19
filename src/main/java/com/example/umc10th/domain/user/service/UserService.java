@@ -29,8 +29,8 @@ public class UserService {
                 .email(request.email())
                 .password(encodedPassword)
                 .name(request.nickname())
-                .gender(Gender.MALE)
-                .birthday(LocalDate.of(2003,9,22))
+                .gender(request.gender())
+                .birthday(request.birth())
                 .address("서울")
                 .totalPoint(0L)
                 .build();

@@ -45,8 +45,11 @@ public class SecurityConfig {
                         .permitAll()
                 )
                 .exceptionHandling(exception -> exception
-                        .accessDeniedHandler(customAccessDenied())
-                        .authenticationEntryPoint(customEntryPoint())
+                        .defaultAuthenticationEntryPointFor(
+                                customEntryPoint(),
+                                request -> request.getRequestURI().startsWith("/api/")
+                        )
+                       .accessDeniedHandler(customAccessDenied())
                 )
                 ;
 
