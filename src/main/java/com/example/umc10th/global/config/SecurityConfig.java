@@ -34,8 +34,8 @@ public class SecurityConfig {
             // 로그인
             "/auth/**",
 
-            "/api/users/signup",
-            "/api/users/login"
+            "/api/v1/users/signup",
+            "/api/v1/users/login"
     };
 
     @Bean
