@@ -5,6 +5,7 @@ import com.example.umc10th.domain.user.dto.UserResDTO;
 import com.example.umc10th.domain.user.entity.User;
 import com.example.umc10th.domain.user.enums.Gender;
 import com.example.umc10th.domain.user.repository.UserRepository;
+import com.example.umc10th.global.security.jwt.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -14,14 +15,14 @@ import java.time.LocalDate;
 
 @Service
 @RequiredArgsConstructor
-@Transactional(readOnly = true)
+@Transactional
 
 public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final JwtTokenProvider jwtTokenProvider;
 
-    @Transactional
-    public User signUp(UserReqDTO.SignUpDTO request) {
+    public UserResDTO.SignUpResultDTO signUp(UserReqDTO.SignUpDTO request) {
         String encodedPassword =
                 passwordEncoder.encode(request.password());
 
@@ -35,7 +36,14 @@ public class UserService {
                 .totalPoint(0L)
                 .build();
 
-        return userRepository.save(user);
+        User savedUser = userRepository.save(user);
+
+        String accessToken = jwtTokenProvider.createAccessToken(
+                savedUser.getUserId(),
+                savedUser.getEmail()
+
+        );
+        return new UserResDTO.SignUpResultDTO(savedUser.getUserId(),accessToken);
     }
 
     public UserResDTO.MyPageDTO getMyPage(Long userId) {
@@ -47,5 +55,22 @@ public class UserService {
                 user.getEmail(),
                 user.getTotalPoint()
                 );
+    }
+    @Transactional(readOnly = true)
+    public UserResDTO.LoginResultDTO login(UserReqDTO.LoginDTO request) {
+
+        User user = userRepository.findByEmail(request.email())
+                .orElseThrow(() -> new RuntimeException("존재하지 않는 회원입니다."));
+
+        if (!passwordEncoder.matches(request.password(), user.getPassword())) {
+            throw new RuntimeException("비밀번호가 일치하지 않습니다.");
+        }
+
+        String accessToken = jwtTokenProvider.createAccessToken(
+                user.getUserId(),
+                user.getEmail()
+        );
+
+        return new UserResDTO.LoginResultDTO(user.getUserId(), accessToken);
     }
 }

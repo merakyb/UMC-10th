@@ -18,6 +18,12 @@ public class UserReqDTO {
                 String email
         ) {}
 
+        public record LoginDTO(
+                String email,
+                String password
+
+        ) {}
+
         public record ChangeRegionDTO(
                 Long regionId
         ) {}

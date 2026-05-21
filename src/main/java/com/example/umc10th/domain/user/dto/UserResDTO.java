@@ -8,6 +8,11 @@ public class UserResDTO {
 
     ) {}
 
+    public record LoginResultDTO(
+            Long userId,
+            String accessToken
+    ) {}
+
     public record ChangeRegionResultDTO(
             Long regionId
     ) {}
