@@ -30,7 +30,7 @@ public class UserController {
 
     @PostMapping("/v1/users/login")
     public ApiResponse<UserResDTO.LoginResultDTO> login(
-            @RequestBody UserReqDTO.LoginDTO request
+            @RequestBody @Valid UserReqDTO.LoginDTO request
     ) {
         return ApiResponse.onSuccess(UserSuccessCode.LOGIN_SUCCESS,userService.login(request));
     }
