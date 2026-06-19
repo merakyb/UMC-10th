@@ -3,8 +3,8 @@ package com.example.umc10th.global.security.filter;
 import com.example.umc10th.global.apiPayload.ApiResponse;
 import com.example.umc10th.global.apiPayload.code.BaseErrorCode;
 import com.example.umc10th.global.apiPayload.code.GeneralErrorCode;
+import com.example.umc10th.global.security.jwt.JwtTokenProvider;
 import com.example.umc10th.global.security.service.CustomUserDetailsService;
-import com.example.umc10th.global.security.util.JwtUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -23,7 +23,7 @@ import java.io.IOException;
 @RequiredArgsConstructor
 public class JwtAuthFilter extends OncePerRequestFilter {
 
-    private final JwtUtil jwtUtil;
+    private final JwtTokenProvider jwtTokenProvider;
     private final CustomUserDetailsService customUserDetailsService;
 
     @Override
@@ -44,9 +44,9 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             // Bearer이면 추출
             token = token.replace("Bearer ", "");
             // AccessToken 검증하기: 올바른 토큰이면
-            if (jwtUtil.isValid(token)) {
+            if (jwtTokenProvider.isValid(token)) {
                 // 토큰에서 이메일 추출
-                String email = jwtUtil.getEmail(token);
+                String email = jwtTokenProvider.getEmail(token);
                 // 인증 객체 생성: 이메일로 찾아온 뒤, 인증 객체 생성
                 UserDetails user = customUserDetailsService.loadUserByUsername(email);
                 Authentication auth = new UsernamePasswordAuthenticationToken(
