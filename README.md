@@ -1,6 +1,13 @@
-# SpringBoot-B
-## 1~3주차 : ERD , SQL 및 API 명세서, Spring Boot 기본 설명
+# UMC-10th SpringBoot-B
 
-## 4주차 : 프로젝트 세팅하기 - 아키텍처 구조, Swagger
+## 주차별 PR
 
-## 5주차 : 프로젝트 세팅하기 - API 응답 통일, 에러 핸들러
+| Week | PR |
+|-------|----|
+| Week 4 | https://github.com/10thKAUUMC/SpringBoot-B/pull/2#issue-4207568877 |
+| Week 5 | https://github.com/10thKAUUMC/SpringBoot-B/pull/5#issue-4363691886 |
+| Week 6 | https://github.com/10thKAUUMC/SpringBoot-B/pull/7#issue-4406165975 |
+| Week 7 | https://github.com/10thKAUUMC/SpringBoot-B/pull/12#issue-4462606410 |
+| Week 8 | https://github.com/10thKAUUMC/SpringBoot-B/pull/16#issue-4475794250 |
+| Week 9 | https://github.com/10thKAUUMC/SpringBoot-B/pull/17#issue-4494503279 |
+| Week 10 | https://github.com/10thKAUUMC/SpringBoot-B/pull/18#issue-4697959289 |
