@@ -9,6 +9,7 @@ import com.example.umc10th.global.apiPayload.code.BaseSuccessCode;
 import com.example.umc10th.global.apiPayload.code.GeneralSuccessSuccessCode;
 import com.example.umc10th.global.security.entity.AuthMember;
 import com.example.umc10th.global.security.service.CustomUserDetailsService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -22,7 +23,7 @@ public class UserController {
 
     @PostMapping("/v1/users/signup")
     public ApiResponse<UserResDTO.SignUpResultDTO> signUp(
-            @RequestBody UserReqDTO.SignUpDTO request
+            @RequestBody @Valid UserReqDTO.SignUpDTO request
     ) {
         return ApiResponse.onSuccess(UserSuccessCode.SIGNUP_SUCCESS,userService.signUp(request));
     }
